@@ -5,7 +5,7 @@
     <groupId>tru.springframework.com</groupId>
     <artifactId>sfg-pet-clinic</artifactId>
 
-    <version>0.0.3-SNAPSHOT</version>
+    <version>0.0.5-SNAPSHOT</version>
     <modules>
         <module>pet-clinic-data</module>
         <module>pet-clinic-web</module>
@@ -67,7 +67,7 @@
 
     <scm>
         <developerConnection>scm:git:https://github.com/PatrykTru/sfg-pet-clinic.git</developerConnection>
-        <tag>sfg-pet-clinic-0.0.5</tag>
+        <tag>sfg-pet-clinic-0.0.6</tag>
     </scm>
 
 </project>

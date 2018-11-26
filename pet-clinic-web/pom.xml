@@ -4,7 +4,7 @@
         <artifactId>sfg-pet-clinic</artifactId>
         <groupId>tru.springframework.com</groupId>
 
-        <version>0.0.3-SNAPSHOT</version>
+        <version>0.0.5-SNAPSHOT</version>
 
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -16,7 +16,7 @@
             <artifactId>pet-clinic-data</artifactId>
             <groupId>tru.springframework.com</groupId>
 
-            <version>0.0.3-SNAPSHOT</version>
+            <version>0.0.5-SNAPSHOT</version>
 
         </dependency>
 
@@ -64,6 +64,6 @@
 
             </plugin>
         </plugins>
-        <testSourceDirectory>src/test/java/sfgpetclinic/SfgPetClinicApplicationTests.java</testSourceDirectory>
+        <testSourceDirectory>src/test/java/tru.springframework.com.sfgpetclinic/SfgPetClinicApplicationTests.java</testSourceDirectory>
     </build>
 </project>
