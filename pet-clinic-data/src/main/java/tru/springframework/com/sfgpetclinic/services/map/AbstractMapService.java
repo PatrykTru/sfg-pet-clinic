@@ -1,4 +1,4 @@
-package tru.springframework.com.sfgpetclinic.map;
+package tru.springframework.com.sfgpetclinic.services.map;
 
 import tru.springframework.com.sfgpetclinic.model.BaseEntity;
 
