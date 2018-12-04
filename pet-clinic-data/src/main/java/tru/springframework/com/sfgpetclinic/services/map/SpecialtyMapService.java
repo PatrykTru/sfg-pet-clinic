@@ -2,11 +2,11 @@ package tru.springframework.com.sfgpetclinic.services.map;
 
 import org.springframework.stereotype.Service;
 import tru.springframework.com.sfgpetclinic.model.Specialty;
-import tru.springframework.com.sfgpetclinic.services.SpecialtiesService;
+import tru.springframework.com.sfgpetclinic.services.SpecialtyService;
 
 import java.util.Set;
 @Service
-public class SpecialtiesMapService extends AbstractMapService<Specialty,Long> implements SpecialtiesService {
+public class SpecialtyMapService extends AbstractMapService<Specialty,Long> implements SpecialtyService {
     @Override
     public Set<Specialty> findAll() {
         return super.findAll();
