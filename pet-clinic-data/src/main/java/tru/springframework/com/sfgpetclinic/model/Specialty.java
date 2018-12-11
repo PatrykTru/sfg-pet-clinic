@@ -1,14 +1,14 @@
 package tru.springframework.com.sfgpetclinic.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "specialties")
 public class Specialty extends BaseEntity {
 
-    @JoinColumn(name = "description")
+    @Column(name = "description")
     private String description;
 
     public String getDescription() {
