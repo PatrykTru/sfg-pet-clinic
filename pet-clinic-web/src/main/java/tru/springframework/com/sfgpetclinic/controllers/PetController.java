@@ -1,21 +1,24 @@
 package tru.springframework.com.sfgpetclinic.controllers;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
+import org.springframework.util.StringUtils;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import tru.springframework.com.sfgpetclinic.model.Owner;
+import tru.springframework.com.sfgpetclinic.model.Pet;
 import tru.springframework.com.sfgpetclinic.model.PetType;
 import tru.springframework.com.sfgpetclinic.services.OwnerService;
 import tru.springframework.com.sfgpetclinic.services.PetService;
 import tru.springframework.com.sfgpetclinic.services.PetTypeService;
 
-import java.util.Set;
+import javax.validation.Valid;
+import java.util.Collection;
 
 @Controller
-@RequestMapping("owners/{ownersId}")
+@RequestMapping("/owners/{ownersId}")
 public class PetController {
 
 
@@ -29,13 +32,10 @@ public class PetController {
         this.petTypeService = petTypeService;
     }
 
-    public PetController(PetService petService, OwnerService ownerService) {
-        this.petService = petService;
-        this.ownerService = ownerService;
-    }
+
 
     @ModelAttribute("types")
-    public Set<PetType> populatePetTypes()
+    public Collection<PetType> populatePetTypes()
     {
         return petTypeService.findAll();
     }
@@ -53,4 +53,53 @@ public class PetController {
     }
 
 
+    @GetMapping("/pets/new")
+    public String initCreateForm(Owner owner,Model model)
+    {
+        Pet pet = new Pet();
+        owner.getPets().add(pet);
+        pet.setOwner(owner);
+        model.addAttribute("pet",pet);
+        return "pets/createOrUpdatePetForm";
+    }
+
+    @PostMapping("/pets/new")
+    public String processCreateForm(Owner owner, BindingResult result, @Valid Pet pet, ModelMap model)
+    {
+        if (StringUtils.hasLength(pet.getName()) && pet.isNew() && owner.getPet(pet.getName(), true) != null){
+            result.rejectValue("name", "duplicate", "already exists");
+        }
+        owner.getPets().add(pet);
+        if (result.hasErrors())
+        {
+            model.put("pet",pet);
+            return "pets/createOrUpdateForm";
+        }
+        else {
+            petService.save(pet);
+            return "redirect:/owners/"+ owner.getId();
+        }
+    }
+
+    @GetMapping("/pets/{petId}/edit")
+    public String initUpdateForm(@PathVariable Long petId,Model model)
+    {
+        model.addAttribute("pet" , petService.findById(petId));
+        return "pets/createOrUpdatePetForm";
+    }
+
+    @PostMapping("/pets/{petId}/edit")
+    public String processEditForm(Owner owner, BindingResult result, @Valid Pet pet, ModelMap model)
+    {
+        if (result.hasErrors()){
+        pet.setOwner(owner);
+        owner.getPets().add(pet);
+        return "pets/createOrUpdatePetForm";
+        }
+        else {
+            owner.getPets().add(pet);
+            petService.save(pet);
+            return "redirect:/owners/"+ owner.getId();
+        }
+    }
 }
