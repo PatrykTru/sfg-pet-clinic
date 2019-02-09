@@ -40,12 +40,13 @@ public class VisitController {
 
         return visit;
     }
-
+    // Spring MVC calls method loadPetWithVisit(...) before processNewVisitForm is called
     @GetMapping("/owners/*/pets/{petId}/visits/new")
     public String initNewVisit (@PathVariable Long petId , Map<String,Object> model){
         return "pets/createOrUpdateVisitForm";
     }
 
+    // Spring MVC calls method loadPetWithVisit(...) before processNewVisitForm is called
     @PostMapping("/owners/{ownerId}/pets/{petId}/visits/new")
     public String processNewVisit(@Valid Visit visit, BindingResult result)
     {
@@ -56,7 +57,7 @@ public class VisitController {
         else
         {
             visitService.save(visit);
-            return "redirect:/owners/{ownersId}";
+            return "redirect:/owners/{ownerId}";
         }
     }
 }
