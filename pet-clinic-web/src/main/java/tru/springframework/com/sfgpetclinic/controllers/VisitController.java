@@ -10,6 +10,8 @@ import tru.springframework.com.sfgpetclinic.services.PetService;
 import tru.springframework.com.sfgpetclinic.services.VisitService;
 
 import javax.validation.Valid;
+import java.beans.PropertyEditorSupport;
+import java.time.LocalDate;
 import java.util.Map;
 
 @Controller
@@ -27,6 +29,15 @@ public class VisitController {
     public void setAllowedFields(WebDataBinder binder)
     {
         binder.setDisallowedFields("id");
+
+        binder.registerCustomEditor(LocalDate.class, new PropertyEditorSupport() {
+
+            @Override
+            public void setAsText(String text) throws IllegalArgumentException {
+                setValue(LocalDate.parse(text));
+            }
+
+    });
     }
 
     @ModelAttribute("visit")
